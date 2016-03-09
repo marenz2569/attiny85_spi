@@ -1,12 +1,10 @@
 #include "spi.h"
 
-void spi_init(bool state) {
+void spi_init(bool input_state) {
 	//
-	// configure state (default is slave)
+	// configure state
 	//
-	if(state) {
-#define SPI_STATE_MASTER
-	}
+	state = input_state;
 	//
 	// output:
 	//	DO
@@ -17,28 +15,11 @@ void spi_init(bool state) {
 	// spi mode:
 	// 	three wire
 	//
-	USICR |= _BV(USIWM0)
-#ifndef SPI_STATE_MASTER
-		| _BV(USICS1)
-#endif
-		;
-
-#define SPI_INIT
-}
-
-void spi_init(void) {
-	spi_init(SPI_SLAVE);
+	USICR |= _BV(USIWM0);
+	if(!state) USICR |= _BV(USICS1);
 }
 
 uint8_t spi_wrrd(uint8_t out) {
-#ifndef SPI_INIT
-	//
-	// TODO:
-	// 	- remove return value
-	// 	- add avr-gicc compiler warning
-	//
-	return 0x00;
-#endif
 	//
 	// write data to register
 	//
@@ -50,24 +31,25 @@ uint8_t spi_wrrd(uint8_t out) {
 	//
 	// wait for counter buffer overflow
 	//
-#ifdef SPI_STATE_MASTER
+	
 	do
-		//
-		// spi mode:
-		// 	three wire
-		//
-		// clock source:
-		// 	external, rising
-		// 4-bit counter cs:
-		// 	usitc
-		//
-		// clock
-		//
-		USICR = _BV(USIWM0)
-			| _BV(USICS1) | _BV(USICLK)
-			| _BV(USITC)
-			;
-#endif
+		if(state) {
+			//
+			// spi mode:
+			// 	three wire
+			//
+			// clock source:
+			// 	external, rising
+			// 4-bit counter cs:
+			// 	usitc
+			//
+			// clock
+			//
+			USICR = _BV(USIWM0)
+				| _BV(USICS1) | _BV(USICLK)
+				| _BV(USITC)
+				;
+		}
 	while ((USISR & _BV(USIOIF)) == 0);
 	//
 	// return shifted-in data

@@ -2,8 +2,6 @@
 
 #include "../../../spi.h"
 
-#define F_CPU 8000000L
-
 void init(void);
 
 int main(void) {
@@ -25,5 +23,5 @@ void init(void) {
 	//
 	// init spi
 	//
-	spi_init();
+	spi_init(SPI_MASTER);
 }

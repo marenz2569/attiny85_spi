@@ -29,5 +29,5 @@ void init(void) {
 	//
 	// init spi
 	//
-	spi_init();
+	spi_init(SPI_SLAVE);
 }

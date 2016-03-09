@@ -1,5 +1,4 @@
 #include <avr/io.h>
-#include <util/delay.h>
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -9,20 +8,19 @@
 #define SPI_MASTER	true
 #define SPI_SLAVE	false
 
+	static bool state = SPI_SLAVE;
+
 	/*
 	 * initializes three wire spi ports:
 	 * 	PB0
 	 * 	PB1
 	 * 	PB2
 	 * arguments:
-	 * 	none:
-	 * 		sets the spibus to slave mode
 	 * 	bool:
 	 * 		set to true for master mode (SPI_MASTER)
 	 * 		or false (SPI_SLAVE) for slave mode
 	 */
 	void spi_init(bool);
-	void spi_init(void);
 
 	/*
 	 * arguments:
