@@ -9,11 +9,15 @@ void spi_init(bool input_state) {
 	// output:
 	//	DO
 	//	USCK
+	//		- only on master mode
 	//
-	DDRB |= _BV(DDB1) | _BV(DDB2);
+	DDRB |= _BV(DDB1);
+	if(state) DDRB |= _BV(DDB2);
 	//
 	// spi mode:
 	// 	three wire
+	// external clock:
+	// 	- only on slave mode
 	//
 	USICR |= _BV(USIWM0);
 	if(!state) USICR |= _BV(USICS1);

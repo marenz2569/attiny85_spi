@@ -25,7 +25,7 @@ int main(void) {
 }
 
 void init(void) {
-	DDRB |= _BV(DDB4) | _BV(DDB3);	
+	DDRB |= _BV(DDB4) | _BV(DDB3);
 	//
 	// init spi
 	//
