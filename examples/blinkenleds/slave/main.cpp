@@ -2,6 +2,8 @@
 
 #include "../../../spi.h"
 
+using namespace spi;
+
 void init(void);
 
 int main(void) {
