@@ -23,10 +23,6 @@ int main(void) {
 
 void init(void) {
 	//
-	// disable ADC
-	//
-	//ADCSRA &= ~_BV(ADEN);
-	//
 	// init spi
 	//
 	spi_init(SPI_MASTER);
