@@ -9,7 +9,7 @@
 #define SPI_SLAVE	false
 
 	namespace spi {
-		static bool state = SPI_SLAVE;
+		extern bool spi_state;
 
 		/*
 		 * initializes three wire spi ports:

@@ -1,12 +1,13 @@
 #include "spi.h"
 
 namespace spi {
+	bool spi_state;
 
 	void spi_init(bool input_state) {
 		//
 		// configure state
 		//
-		state = input_state;
+		spi_state = input_state;
 		//
 		// output:
 		//	DO
@@ -14,7 +15,7 @@ namespace spi {
 		//		- only on master mode
 		//
 		DDRB |= _BV(DDB1);
-		if(state) DDRB |= _BV(DDB2);
+		if(spi_state) DDRB |= _BV(DDB2);
 		//
 		// spi mode:
 		// 	three wire
@@ -22,7 +23,7 @@ namespace spi {
 		// 	- only on slave mode
 		//
 		USICR |= _BV(USIWM0);
-		if(!state) USICR |= _BV(USICS1);
+		if(!spi_state) USICR |= _BV(USICS1);
 	}
 
 	uint8_t spi_wrrd(uint8_t out) {
@@ -39,7 +40,7 @@ namespace spi {
 		//
 		
 		do
-			if(state) {
+			if(spi_state) {
 				//
 				// spi mode:
 				// 	three wire
